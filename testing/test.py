@@ -5,16 +5,23 @@ from utils import process_dataset
 
 device = torch.device('cuda' if torch.cuda.is_available() else 'cpu')
 
-datasets=("/data/shared/hate_speech_dataset/Hate_Check.csv"
-          "/data/jzheng36/hatemoderate/hatemoderate/postprocess/test_hatE.csv"
-          "/data/jzheng36/hatemoderate/hatemoderate/postprocess/test_htpo.csv"
-          "/data/jzheng36/hatemoderate/hatemoderate/postprocess/test_hatex.csv")
-models=("/data/jzheng36/model/card_only_roberta-base_lr=5e-06_epoch=2"
-        "/data/jzheng36/model/roberta-base_lr=5e-06_epoch=2")
+# datasets=("hatemoderate.csv",
+#           '/data/jzheng36/HateModerate/fine_tune/datasets/testing/Hate_Check.csv')
+dataset="hatemoderate.csv"
+#models=("/data/jzheng36/Fine-Tune-Llama2-/cardiffnlp-twitter-roberta-base-hate-latest_lr=5e-06_epoch=3_hatemoderate",
+        #"/data/jzheng36/Fine-Tune-Llama2-/llama2_ft_7B-lr=2e-4")
+
+model=("/data/jzheng36/Fine-Tune-Llama2-/models_7b")
 
 labels = "LABEL_1"
 
 
-for dataset in datasets:
-        for model in models:
-                process_dataset(dataset, model, labels, device)
+# for dataset in datasets:
+#         for model in models:
+#                 process_dataset(dataset, model, labels, device)
+
+#for model in models:
+        #process_dataset(dataset, model, labels, device)
+
+
+process_dataset(dataset, model, labels, device)

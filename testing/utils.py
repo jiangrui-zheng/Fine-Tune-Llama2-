@@ -95,76 +95,17 @@ def process_dataset(dataset_name, model_path, comparison_value, device):
         negative_sample['label'] = 'NOT-HATE'
         combined_sample = pd.concat([positive_sample, negative_sample]).reset_index(drop=True)
 
-    match = re.search(r'/([^/]+?)(\.csv)?$', dataset_name)
 
-    if match:
-        extracted_name = match.group(1)
-    else:
-        print("Pattern not found in string")
 
-    file_name = "{}_{}.csv".format(extracted_name, model_path.split('/')[-1])
+    file_name = "{}_{}.csv".format(dataset_name, model_path.split('/')[-1])
     predict_hate_label(model_path, file_name, combined_sample, device)
     df = pd.read_csv('../tmp/'+ file_name, sep='\t', header=None)
     matching_hate, total_hate = calculate_matching(df, 'HATE', comparison_value)
     matching_nothate, total_nothate = calculate_matching(df, 'NOT-HATE', comparison_value)
 
-    print(f"Results for {extracted_name} using model {model_path}:")
+    print(f"Results for {dataset_name} using model {model_path}:")
     print(f"{(matching_hate / total_hate) * 100:.2f}% of accuracy of HATE cases.")
     print(f"{(matching_nothate / total_nothate) * 100:.2f}% of accuracy of NOT-HATE cases.")
     print(f"{(matching_hate + matching_nothate) / len(df) * 100:.2f}% of accuracy of all cases.")
     print("\n")
 
-
-def train_hate_model(model_name,
-                     learning_rate=1e-6,
-                     n_epoch=3,
-                     train_file_hate="../postprocess/hate_train.csv",
-                     train_file_nothate="../postprocess/nonhate_train.csv",
-                     test_file_hate="../postprocess/hate_test.csv",
-                     test_file_nothate="../postprocess/nonhate_test.csv",
-                     compare_datasets='cardiffnlp.pkl',
-                     include = True,
-                     model_type = "roberta"):
-    os.environ["TOKENIZERS_PARALLELISM"] = "false"
-
-    model_args = ClassificationArgs()
-
-    model_args.learning_rate = learning_rate
-    model_args.num_train_epochs = n_epoch
-    model_args.train_batch_size = 32
-    model_args.eval_batch_size = 32
-    model_args.n_gpu = 4
-    model_args.output_dir = "/data/jzheng36/model/{}_lr={}_epoch={}_hatemoderate".format(model_name.replace("/", "-"), learning_rate, n_epoch)
-    model_args.overwrite_output_dir = True
-    model_args.save_best_model = True
-    model_args.use_multiprocessing = False
-    model_args.use_multiprocessing_for_evaluation = False
-    model_args.evaluate_during_training = True
-    model_args.evaluate_during_training_steps = 100
-
-    model = ClassificationModel(model_type, model_name, num_labels=2, args=model_args)
-
-    cardiffnlp_datasets = pd.read_pickle(compare_datasets)
-    cardiffnlp_datasets = cardiffnlp_datasets.rename(columns={"label": "labels"})
-    cardiffnlp_datasets = cardiffnlp_datasets[cardiffnlp_datasets['split'] != 'test']
-
-    columns = ["text", "labels"]
-
-    train_df = pd.concat([
-        pd.read_csv(train_file_hate, sep="\t").assign(labels=1),
-        pd.read_csv(train_file_nothate, sep="\t").assign(labels=0)
-    ])
-    train_df = train_df.rename(columns={"sentence": "text"}).sample(frac=1)
-    if include == True:
-        train_df = pd.concat([train_df[columns], cardiffnlp_datasets[columns]])
-    else:
-        train_df = pd.concat([cardiffnlp_datasets[columns]])
-
-
-    eval_df = pd.concat([
-        pd.read_csv(test_file_hate, sep="\t").assign(labels=1),
-        pd.read_csv(test_file_nothate, sep="\t").assign(labels=0)
-    ])
-    eval_df = eval_df.rename(columns={"sentence": "text"}).sample(frac=1)
-
-    model.train_model(train_df=train_df, eval_df=eval_df)

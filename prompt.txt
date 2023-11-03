@@ -1,0 +1,22 @@
+Classify the sentence of Question into categories 1-7 and response by number only
+
+Category 1:	non-hateful counter hate speech. Examples:["It is wrong to say that Jews are insects", "it is wrong to say women are sexual objectd", "women are not dirty animals", "disabled people are not stupid", "I think the use of derogatory language such as fag and homo shows a lack of education and understanding. Come on people, it's the 21st centaury"]
+
+Category 2:	aggressive/hateful counter hate speech. Examples:["as a jew, I'm sick of hearing our existence is wrong", "I hate that people think you can say all women are sluts", "Women like me are scum? Shut up", "women like me are filth? DISGUSTING OPINION",  "I want to kill all the people who hate asians",  "I really want to fuck people who hate blacks", "People who discriminate against women should go to hell"]
+
+Category 3:	untarget hate speech(not including protected groups/characteristics). Examples:["they are all ugly people and deserve to die", "go and fuck yourself", "these losers don't know what they're talking about", "they are so lazy and fucking rude", "I can't believe how stupid this person was", "she's really fucking gross", "Man you are too unintelligent I don't know how you were accepted at university"]
+
+Category 4:	non-hateful speech stating facts, opinions, or asking a questions (in a non-hateful way). Examples:["The Nazis hated the Jews.", "Some women have to deal with scum of the earth in the workplace", "I think people, regardless of gender, cant be used for nothing other than sex, AND you have to pay for sex with them no matter what kind of relationship you're in. If they're your partner, you just dont know how much you're going to pay, compared to a prostitute where you know exactly how much you're paying at what you are paying for.", "it is one of the obvious facts everyone should be aware of is non white men like Indians , Pakis, Arabs and blacks can not treated fairly when these racists are around", "the new corona plague has spread across the whole fucking world", "The nations that throw the Jews out end up in less standing in the end because of the horrendous actions they're doing"]
+
+Category 5:	Paraphrasing or quoting hate speech said by others. Examples:["I was told that people in my country hate Jews because we are rich and greedy", "ALL YOU DIRTY NIGGERS ARE A WASTE OF RESOURCES - my boss shouted at me", "in america many people think that Hispanic people should not be allowed into the country for numerous reasons.", "just seen some disgusting graffiti saying niggers are repulsive", "If you go to any white supremacist sites you'll see they say that blacks are dumb, inferior, violent and criminals and they believe that if the Jews didn't exist to fool everyone into desegregation all those problems would go away."]
+
+Category 6:	Supporting protected group. Examples:["Jewish people are just as honest as the rest of us", "trans are human. That's it.", "Being gay is so normal", "black women are so terrifyingly beautiful it hurts", "Rescue women, don't just ignore them and wack off for the rest of your life", "Let's protect women from getting raped and abused by men."]
+
+Category 7:	attacking non-protected group such as organization, objects, politicians, nazis, gangsters，criminals. Examples:["terrorism is disgusting", "liberals are dumb as fuck", "radical people should be kept aside from society, we need to segregate them out", "White supremacists should be wiped off the planet", "fucking black rats brought the plague, they spread disease"]
+
+Please note the difference between categories:
+1 vs 2: where to draw the line of "hateful" vs "nonhateful"
+1,2 vs 5: is it countering, or simply paraphrasing or quoting
+4 vs 5: if it is describing third person/group's words, it's 5, otherwise it's 4
+4 vs 7: if it's hateful or attacking non-protected group, it's 7; if there's no hate, it's 4
+2 vs 7: if it's attacking people who are hateful towards protected group, it's 2 not 7
